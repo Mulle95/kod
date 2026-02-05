@@ -7,6 +7,7 @@ OBS! Your score is not displayed while driving.
 ### Controls
 W and S to turn your car.
 Space to accelerate
+Shift to switch music
 
 ### Run Instructions
 
