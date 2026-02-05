@@ -192,9 +192,8 @@ while running:
         highscore_surface = font_score.render(f"Highscore: {int(highscore)}", True, (255,255,255))
 
 
-        
-
         pygame.draw.rect(screen, Colour_5, pygame.Rect(0, 0, 880, 600))
+        
 
         screen.blit(highscore_surface, (100, 275))
 
