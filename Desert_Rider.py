@@ -167,7 +167,7 @@ def load_highscore():
 
     try:
 
-        with open("highscore.txt", "r") as f:
+        with open("High Score.txt", "r") as f:
 
             return int(f.read())
 
@@ -179,7 +179,7 @@ def load_highscore():
 
 def save_highscore(value):
 
-    with open("highscore.txt", "w") as f:
+    with open("High Score.txt", "w") as f:
 
         f.write(str(int(value)))
 
