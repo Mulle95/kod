@@ -5,9 +5,13 @@ import random
 import math
 
 
+
+
+
 pygame.mixer.init()
 
 pygame.font.init()
+
 
 
 background_colour = (0, 0, 0)
@@ -22,6 +26,8 @@ font_ded = pygame.font.SysFont('Bytesized-regular', 100)
 
 font_ded3 = pygame.font.SysFont('Bytesized-regular', 50)
 
+eat_a_can = pygame.font.SysFont('Bytesized-regular', 50)
+
 text_surface16 = font1.render("KM/H", True, "white")
 
 text_surface1 = font1.render("10", True, "white")
@@ -29,6 +35,8 @@ text_surface1 = font1.render("10", True, "white")
 text_surface5 = font1.render("50", True, "white")
 
 text_surface10 = font1.render("100", True, "white")
+
+Mulle = True
 
 C1 = (225, 225, 0)
 
@@ -45,6 +53,8 @@ text_surfacetd = font2.render("PRESS SPACE TO START", True, C2)
 font_deded = font_ded3.render("Press Space To Return To Menu", True, Gih)
 
 font_dedes = font_ded.render(".GAME OVER.", True, Guh)
+
+eat_a_frog = eat_a_can.render("Mulle Productions", True, Gih)
 
 Colour_1 = (235, 235, 235)
 
@@ -131,10 +141,12 @@ caryD = 0
 
 enemyx = -300
 
-title = True
+title = False
+
+timger = pygame.USEREVENT + 1
 
 
-pygame.display.set_caption('kar gem')
+pygame.display.set_caption('Desert Rider')
 
 
 pygame.mixer.music.load("8bit blues.mp3")
@@ -144,16 +156,48 @@ pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.5)
 
 
+pygame.time.set_timer(timger, 3000)
+
+
+def load_highscore():
+
+    try:
+
+        with open("highscore.txt", "r") as f:
+
+            return int(f.read())
+        
+
+    except:
+
+        return 0
+
+
+def save_highscore(value):
+
+    with open("highscore.txt", "w") as f:
+
+        f.write(str(int(value)))
+
+
+highscore = load_highscore()
+
+
 while running:
 
     if gameover == True:
 
         score_surface = font_score.render(f"Score: {int(score)}", True, (255,255,255))
 
+        highscore_surface = font_score.render(f"Highscore: {int(highscore)}", True, (255,255,255))
+
+
+        
 
         pygame.draw.rect(screen, Colour_5, pygame.Rect(0, 0, 880, 600))
 
-    
+        screen.blit(highscore_surface, (100, 275))
+
         screen.blit(score_surface, (100, 175))
 
         screen.blit(font_dedes, (100, 50))
@@ -171,6 +215,22 @@ while running:
         screen.blit(text_surfacet, (155, 540))
 
         screen.blit(text_surfacetd, (158, 540))
+
+    elif Mulle == True:
+        
+        pygame.draw.rect(screen, Colour_5, pygame.Rect(0, 0, 880, 600))
+
+
+        screen.blit(eat_a_frog, (50, 50))
+
+
+        for event in pygame.event.get():
+
+            if event.type == timger:
+
+                title = True
+
+                Mulle = False
 
 
     else:
@@ -368,6 +428,11 @@ while running:
         if k+153 > enemyx  and k < enemyx + 153 and ( (cary+11 > 186 and cary+11 < 233) or ( cary+58 > 186 and cary+58 < 233)):
                 
                 gameover = True
+
+
+                if score > highscore:
+                    highscore = int(score)
+                    save_highscore(highscore)
 
 
         for i, (x, y, surface) in enumerate(stones):
